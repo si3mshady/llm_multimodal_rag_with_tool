@@ -1,3 +1,4 @@
+import re
 from llama_index.multi_modal_llms import ReplicateMultiModal
 from llama_index.multi_modal_llms.replicate_multi_modal import (
     REPLICATE_MULTI_MODAL_LLM_MODELS,
@@ -66,12 +67,12 @@ def main():
                             image_documents=[image_document],
                         )
                         
-                        template = f"If this response in angled brackets is related to food  <<{mm_resp}>> \
-                         is related to food the provide a list of ingredients and serving size"
-                        agent_response = agent.chat(template)
+                        template = f"If this response in angled brackets is related to food  <<{mm_resp}>> reduce the information and identity the single main food item then provide a list of ingredients and serving size for that food item along with a detailed description if ingredient inforamtion is not available or serving just be descriptive explaining the image"
+                        agent_response = str(agent.chat(template))
                         print(type(agent_response))
 
-                        st.write("Agent Response: ", str(agent_response))
+                        
+                        st.write(str(re.split("Agent Response:", agent_response)[0]))
 
                 except Exception as e:                
                     print("Inference Failed due to: ", e)
