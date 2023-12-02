@@ -1,4 +1,5 @@
 from llama_index.tools.tool_spec.base import BaseToolSpec
+from llama_index.agent import OpenAIAgent
 import requests 
 from dotenv import load_dotenv
 import os, json
@@ -20,6 +21,7 @@ class GetNutritionDetails(BaseToolSpec):
         '''
          Given a food item this function will query the USDA API database for the same and return a document that 
          contains ingredients, serving size and food nutritients 
+
          args:
            food: (string: the food item to query) 
         '''
@@ -31,16 +33,29 @@ class GetNutritionDetails(BaseToolSpec):
         food_dictionary = {
             "ingredients": res.get('foods')[0]['ingredients'],
             "servingSize":  res.get('foods')[0]['servingSize'],
-            "foodNutrients":  res.get('foods')[0]['foodNutrients']
+            # "foodNutrients":  res.get('foods')[0]['foodNutrients']
         }
-        print(food_dictionary)
+        # print(food_dictionary)
 
         return food_dictionary
 
 
 tool = GetNutritionDetails()
 
-tool.resolve_food_item("burger")
+tool.resolve_food_item("tuna")
+
+
+agent = OpenAIAgent.from_tools(
+    GetNutritionDetails().to_tool_list(),
+    verbose=True,
+)
+
+res = agent.chat("Is ice cream healthy give me a list of ingredients")
+
+print(res)
+
+
+
 
 #servingSize 
 # ingredients
