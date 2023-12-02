@@ -35,55 +35,16 @@ class GetNutritionDetails(BaseToolSpec):
             "servingSize":  res.get('foods')[0]['servingSize'],
             # "foodNutrients":  res.get('foods')[0]['foodNutrients']
         }
-        # print(food_dictionary)
+        
 
         return food_dictionary
-
-
-tool = GetNutritionDetails()
-
-tool.resolve_food_item("tuna")
-
 
 agent = OpenAIAgent.from_tools(
     GetNutritionDetails().to_tool_list(),
     verbose=True,
 )
 
-res = agent.chat("Is ice cream healthy give me a list of ingredients")
+res = agent.chat("Is pepperoni pizza healthy give me a list of ingredients and serving size")
 
 print(res)
 
-
-
-
-#servingSize 
-# ingredients
-# foodNutrients
-
-
-# dict_keys(['fdcId', 'description', 'dataType', 'gtinUpc', 'publishedDate', 'brandOwner', 'brandName', 'ingredients', 'marketCountry', 'foodCategor
-# y', 'modifiedDate', 'dataSource', 'servingSizeUnit', 'servingSize', 'tradeChannels', 'allHighlightFields', 'score', 'microbes', 'foodNutrients', '
-# finalFoodInputFoods', 'foodMeasures', 'foodAttributes', 'foodAttributeTypes', 'foodVersionIds'])
-
-
-
-
-    
-
-
-
-
-# https://api.data.gov/docs/developer-manual/
-# https://fdc.nal.usda.gov/api-key-signup.html
-#https://fdc.nal.usda.gov/api-guide.html
-#search -> https://app.swaggerhub.com/apis/fdcnal/food-data_central_api/1.0.1#/FDC/postFoodsSearch
-
-
-#/v1/foods/search
-#first use the search api endpoint to get the ID's we need to search
-
-
-#try to resolve the ids you get back from the food search 
-
-#give food to openAI to synthesize data into speech 
