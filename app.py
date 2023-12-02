@@ -39,12 +39,3 @@ class GetNutritionDetails(BaseToolSpec):
 
         return food_dictionary
 
-agent = OpenAIAgent.from_tools(
-    GetNutritionDetails().to_tool_list(),
-    verbose=True,
-)
-
-res = agent.chat("Is pepperoni pizza healthy give me a list of ingredients and serving size")
-
-print(res)
-
