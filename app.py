@@ -29,6 +29,7 @@ class GetNutritionDetails(BaseToolSpec):
 
         response = requests.post(url=self.USDA_URL.format(API_KEY=USDA_API_KEY), headers=self.headers,  data=json.dumps(self.data))
         res=response.json()
+        print(res)
 
         food_dictionary = {
             "ingredients": res.get('foods')[0]['ingredients'],
@@ -39,3 +40,10 @@ class GetNutritionDetails(BaseToolSpec):
 
         return food_dictionary
 
+# agent = OpenAIAgent.from_tools(
+#     GetNutritionDetails().to_tool_list(),
+#     verbose=True,
+# )
+
+# agent_response = str(agent.chat("tuna"))
+# print(type(agent_response))
