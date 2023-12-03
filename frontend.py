@@ -67,7 +67,11 @@ def main():
                             image_documents=[image_document],
                         )
                         
-                        template = f"If this response in angled brackets is related to food  <<{mm_resp}>> reduce the information and identity the single main food item then provide a list of ingredients and serving size for that food item along with a detailed description if ingredient inforamtion is not available or serving just be descriptive explaining the image"
+                        template = f"If the text in angled brackets is contains food  <<{mm_resp}>> identify what the food item, reduce the food down to just one item as it needs to be passed as an argument  \
+                        an input to the agent/tool.  Please provide a list of ingredients and serving size for that food item along with a  very detailed description. If ingredient or serving size inforamtion is not available just be descriptive explaining the image, do not apologize in your response. \
+                        args: 
+                            food item (string)."
+                            
                         agent_response = str(agent.chat(template))
                         print(type(agent_response))
 
@@ -77,9 +81,10 @@ def main():
                 except Exception as e:                
                     print("Inference Failed due to: ", e)
             
-            
-main()
+if __name__ == "__main__":
+    main()
 
+# This is the main app
 
 
 #get the response back from model for image eval
